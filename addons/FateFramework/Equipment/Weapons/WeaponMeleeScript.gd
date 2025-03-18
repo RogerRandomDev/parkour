@@ -1,0 +1,2 @@
+extends WeaponBaseScript
+class_name WeaponMeleeScript

@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" script_class="FateMaterial" load_steps=7 format=3 uid="uid://dvuqjlloyj7n7"]
+
+[ext_resource type="Script" path="res://addons/FateFramework/Environment/BaseFateMaterial.gd" id="1_nht7s"]
+[ext_resource type="Shader" path="res://addons/FateFramework/Environment/shadowMat.gdshader" id="1_v73ek"]
+[ext_resource type="Shader" path="res://addons/FateFramework/Environment/fateMaterial.gdshader" id="2_v0xkb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckxlj"]
+render_priority = 0
+shader = ExtResource("1_v73ek")
+
+[sub_resource type="Gradient" id="Gradient_ulg8t"]
+offsets = PackedFloat32Array(0.260274)
+colors = PackedColorArray(0.482353, 0.482353, 0.482353, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mniyy"]
+gradient = SubResource("Gradient_ulg8t")
+width = 1
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_ckxlj")
+shader = ExtResource("2_v0xkb")
+shader_parameter/TEXTURE = SubResource("GradientTexture1D_mniyy")
+script = ExtResource("1_nht7s")

@@ -1,0 +1,22 @@
+[gd_resource type="QuadMesh" load_steps=3 format=3 uid="uid://dn8tplm4ygsui"]
+
+[ext_resource type="Texture2D" uid="uid://0l6icye6g4kt" path="res://addons/kenney_particle_pack/star_06.png" id="1_nrnim"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nnfs5"]
+render_priority = 126
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+blend_mode = 3
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_nrnim")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[resource]
+material = SubResource("StandardMaterial3D_nnfs5")
+size = Vector2(0.125, 0.125)

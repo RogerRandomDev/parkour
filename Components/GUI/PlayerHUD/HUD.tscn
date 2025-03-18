@@ -1,0 +1,143 @@
+[gd_scene load_steps=7 format=3 uid="uid://c006hss4ibvij"]
+
+[ext_resource type="Script" uid="uid://e6r643isq013" path="res://Components/GUI/PlayerHUD/HUD.gd" id="1_2xyby"]
+[ext_resource type="Shader" uid="uid://bcq2k56pma31x" path="res://addons/FateFramework/GUI/statCircle/statCircle.gdshader" id="1_r04gq"]
+[ext_resource type="Script" uid="uid://rarnfrwsee4b" path="res://addons/FateFramework/GUI/statCircle/statCircle.gd" id="2_4kfmq"]
+[ext_resource type="Script" uid="uid://70d16qksyeyo" path="res://Components/GUI/PlayerHUD/AbilityCooldownListItem.gd" id="4_gsq4g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42fxj"]
+shader = ExtResource("1_r04gq")
+shader_parameter/backColor = Color(0, 0, 0, 1)
+shader_parameter/valueColor = Color(1, 0.34902, 0.364706, 1)
+shader_parameter/lastValueColor = Color(1, 1, 1, 1)
+shader_parameter/innerColor = Color(0, 0, 0, 1)
+shader_parameter/maxValue = 100
+shader_parameter/value = 50
+shader_parameter/lastValue = 100.0
+shader_parameter/lengthOfLine = 0.827957
+shader_parameter/lineAccountsPercentage = 0.5
+shader_parameter/circleThickness = 44.8
+shader_parameter/borderThickness = 4
+shader_parameter/halfSize = Vector2(64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s512s"]
+shader = ExtResource("1_r04gq")
+shader_parameter/backColor = Color(0, 0, 0, 1)
+shader_parameter/valueColor = Color(0, 0.866667, 0.705882, 1)
+shader_parameter/lastValueColor = Color(1, 1, 1, 1)
+shader_parameter/innerColor = Color(0.145098, 0.184314, 0.211765, 1)
+shader_parameter/maxValue = 100
+shader_parameter/value = 50
+shader_parameter/lastValue = 100.0
+shader_parameter/lengthOfLine = 0.803279
+shader_parameter/lineAccountsPercentage = 0.25
+shader_parameter/circleThickness = 25.6
+shader_parameter/borderThickness = 4
+shader_parameter/halfSize = Vector2(48, 64)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2xyby")
+
+[node name="statBars" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 372.0
+offset_bottom = 128.0
+
+[node name="healthCircle" type="ColorRect" parent="statBars" node_paths=PackedStringArray("textContents")]
+material = SubResource("ShaderMaterial_42fxj")
+custom_minimum_size = Vector2(372, 128)
+layout_mode = 2
+offset_right = 372.0
+offset_bottom = 128.0
+script = ExtResource("2_4kfmq")
+textContents = NodePath("Label")
+valueColor = Color(1, 0.34902, 0.364706, 1)
+circleThickness = 0.35
+decreasingTextColor = Color(1, 0, 0, 1)
+circleSize = Vector2(128, 128)
+
+[node name="Label" type="Label" parent="statBars/healthCircle"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 104.0
+offset_bottom = 104.0
+theme_override_constants/line_spacing = -4
+theme_override_font_sizes/font_size = 24
+text = "100.0
+100.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="energyCircle" type="ColorRect" parent="statBars" node_paths=PackedStringArray("textContents")]
+material = SubResource("ShaderMaterial_s512s")
+custom_minimum_size = Vector2(240, 128)
+layout_mode = 2
+offset_left = 128.0
+offset_top = 3.0
+offset_right = 372.0
+offset_bottom = 131.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("2_4kfmq")
+textContents = NodePath("Label")
+valueColor = Color(0, 0.866667, 0.705882, 1)
+innerColor = Color(0.145098, 0.184314, 0.211765, 1)
+circleThickness = 0.2
+decreasingTextColor = Color(1, 0, 0, 1)
+linePercentage = 0.25
+circleSize = Vector2(96, 128)
+
+[node name="Label" type="Label" parent="statBars/energyCircle"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 40.0
+offset_right = 71.0
+offset_bottom = 87.0
+theme_override_constants/line_spacing = -4
+theme_override_font_sizes/font_size = 16
+text = "100.0
+100.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AbilityCooldowns" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="list" type="VBoxContainer" parent="AbilityCooldowns"]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 128.0
+offset_bottom = 384.0
+
+[node name="Control" type="VBoxContainer" parent="AbilityCooldowns/list"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("4_gsq4g")
+
+[node name="Control2" type="VBoxContainer" parent="AbilityCooldowns/list"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("4_gsq4g")
+AbilityListed = "Secondary"
+
+[node name="Control3" type="VBoxContainer" parent="AbilityCooldowns/list"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("4_gsq4g")
+AbilityListed = "Motion"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+position = Vector2(583, 324)
+scale = Vector2(0.1, 0.1)

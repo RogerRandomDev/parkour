@@ -1,0 +1,176 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://addons/FateFramework/inspector/AbilityAnimationPreview.gd" id="1_x0ico"]
+[ext_resource type="Shader" path="res://Components/Sky/sky.gdshader" id="2_y7y34"]
+[ext_resource type="Material" uid="uid://2rb3d00ow3rp" path="res://Testing/Testingf.tres" id="3_nxkly"]
+
+[sub_resource type="Gradient" id="Gradient_ewfu8"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.318801)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_arfe1"]
+noise_type = 2
+frequency = 0.3
+fractal_type = 0
+cellular_jitter = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d4mm4"]
+width = 576
+height = 324
+color_ramp = SubResource("Gradient_ewfu8")
+noise = SubResource("FastNoiseLite_arfe1")
+
+[sub_resource type="Gradient" id="Gradient_idlq7"]
+offsets = PackedFloat32Array(0.396226, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h2qp7"]
+seed = 7
+frequency = 0.046
+fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o7c6x"]
+seamless = true
+color_ramp = SubResource("Gradient_idlq7")
+noise = SubResource("FastNoiseLite_h2qp7")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iyoh4"]
+seed = 3
+frequency = 0.052
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2j4ea"]
+noise = SubResource("FastNoiseLite_iyoh4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hbf0q"]
+frequency = 0.096
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_14060"]
+noise = SubResource("FastNoiseLite_hbf0q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_movil"]
+shader = ExtResource("2_y7y34")
+shader_parameter/day_bottom_color = Color(0.156863, 0.662745, 0.8, 1)
+shader_parameter/day_top_color = Color(0, 1, 1, 1)
+shader_parameter/sunset_bottom_color = Color(0, 0, 0, 1)
+shader_parameter/sunset_top_color = Color(0.00784314, 0.00784314, 0.00784314, 1)
+shader_parameter/horizon_color_day = Color(0.215686, 0.282353, 0.498039, 1)
+shader_parameter/horizon_color_sunset = Color(0.188235, 0.188235, 0.188235, 1)
+shader_parameter/horizon_color_night = Color(0, 0, 0, 1)
+shader_parameter/horizon_falloff = 0.6
+shader_parameter/sun_col = Color(1, 1, 0, 1)
+shader_parameter/sun_size = 0.075
+shader_parameter/sun_blur = 0.161
+shader_parameter/moon_col = Color(0.419608, 0.376471, 1, 1)
+shader_parameter/moon_size = 0.074
+shader_parameter/moon_crescent_offset = 0.037
+shader_parameter/clouds_main_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_edge_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_speed = 0.1
+shader_parameter/clouds_scale = 0.1
+shader_parameter/clouds_cutoff = 0.16
+shader_parameter/clouds_fuzziness = 0.03
+shader_parameter/cloud_outline = 1.0
+shader_parameter/stars_cutoff = 0.763
+shader_parameter/stars_speed = 0.0
+shader_parameter/clouds_texture = SubResource("NoiseTexture2D_2j4ea")
+shader_parameter/clouds_noise_texture = SubResource("NoiseTexture2D_o7c6x")
+shader_parameter/stars_texture = SubResource("NoiseTexture2D_14060")
+
+[sub_resource type="Sky" id="Sky_bklcs"]
+sky_material = SubResource("ShaderMaterial_movil")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_n0tu1"]
+background_mode = 2
+sky = SubResource("Sky_bklcs")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+tonemap_mode = 2
+tonemap_exposure = 1.3
+tonemap_white = 8.0
+ssr_fade_in = 0.219613
+ssao_sharpness = 1.0
+ssao_light_affect = 0.22
+ssao_ao_channel_affect = 1.0
+ssil_radius = 7.82
+ssil_intensity = 12.32
+sdfgi_y_scale = 0
+glow_enabled = true
+glow_levels/1 = 0.1
+glow_levels/2 = 0.7
+glow_levels/3 = 0.3
+glow_levels/4 = 0.5
+glow_levels/5 = 0.25
+glow_normalized = true
+glow_intensity = 0.37
+glow_strength = 0.59
+glow_bloom = 0.24
+glow_blend_mode = 1
+glow_hdr_threshold = 2.57
+glow_hdr_luminance_cap = 34.59
+glow_map_strength = 1.0
+glow_map = SubResource("NoiseTexture2D_d4mm4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_si2do"]
+material = ExtResource("3_nxkly")
+size = Vector2(100, 100)
+
+[node name="AbilityAnimationPreview" type="VBoxContainer"]
+custom_minimum_size = Vector2(82, 194)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -81.0
+offset_right = -1006.0
+offset_bottom = -535.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x0ico")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Animation Preview"
+
+[node name="HSlider" type="HSlider" parent="."]
+editor_description = "Camera Distance"
+layout_mode = 2
+value = 100.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(146, 146)
+render_target_update_mode = 4
+
+[node name="Mesh" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Particles" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Origin" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Origin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 5, 0)
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = 0.39
+shadow_blur = 0.773
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_n0tu1")
+
+[node name="floor" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+mesh = SubResource("PlaneMesh_si2do")
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" script_class="FateMaterial" load_steps=6 format=3 uid="uid://lapg8nka0tqb"]
+
+[ext_resource type="Script" path="res://addons/FateFramework/Environment/BaseFateMaterial.gd" id="1_kanv3"]
+[ext_resource type="Shader" path="res://addons/FateFramework/Environment/shadowMat.gdshader" id="1_vunbc"]
+[ext_resource type="Shader" path="res://addons/FateFramework/Environment/fateMaterial.gdshader" id="2_vvtlj"]
+[ext_resource type="Texture2D" uid="uid://dowuucrikula6" path="res://Testing/guns_gunTexture.png" id="3_nvhir"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pb1gq"]
+render_priority = 0
+shader = ExtResource("1_vunbc")
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_pb1gq")
+shader = ExtResource("2_vvtlj")
+shader_parameter/TEXTURE = ExtResource("3_nvhir")
+script = ExtResource("1_kanv3")

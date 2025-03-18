@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=5 format=3 uid="uid://bqkgiqj3b2m10"]
+
+[ext_resource type="Script" path="res://addons/FateFramework/Ability/AbilityResource.gd" id="1_64grn"]
+[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackPrimary.gd" id="1_jgy3q"]
+[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackMotion.gd" id="2_cwg5y"]
+[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackSecondary.gd" id="2_g5yhx"]
+
+[resource]
+script = ExtResource("1_64grn")
+Name = "Space Warp"
+hasMain = true
+MainName = "Push"
+MainDescription = ""
+MainEffect = ExtResource("1_jgy3q")
+abilityDelay = 0.25
+mainAbilityEnergy = 5
+hasSecondary = true
+SecondaryName = "Pull"
+SecondaryDescription = ""
+SecondaryEffect = ExtResource("2_g5yhx")
+secondaryAbilityDelay = 0.25
+secondaryAbilityEnergy = 5
+hasMotion = true
+MotionName = "Leap"
+MotionDescription = ""
+MotionEffect = ExtResource("2_cwg5y")
+motionAbilityDelay = 0.5
+motionAbilityEnergy = 20
+hasPassive = false
+PassiveName = ""
+PassiveDescription = ""
