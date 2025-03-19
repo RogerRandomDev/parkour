@@ -5,7 +5,6 @@ render_mode unshaded,depth_prepass_alpha;
 varying vec3 world_camera;
 varying vec3 world_position;
 
-uniform float curTime;
 
 uniform float BRIGHTNESS=10.0;
 uniform float scale=1.0;
@@ -24,13 +23,13 @@ uniform float transitionSpeed:hint_range(-2.0,2.0);
 
 float smoothUnionSDF(float distA, float distB, float k ) {
   float h = clamp(0.5 + 0.5*(distA-distB)/k, 0., 1.);
-  return mix(distA, distB, h) - k*h*(1.-h); 
+  return mix(distA, distB, h) - k*h*(1.-h);
 }
 
-float smoothIntersectSDF(float distA, float distB, float k ) 
+float smoothIntersectSDF(float distA, float distB, float k )
 {
   float h = clamp(0.5 - 0.5*(distA-distB)/k, 0., 1.);
-  return mix(distA, distB, h ) + k*h*(1.-h); 
+  return mix(distA, distB, h ) + k*h*(1.-h);
 }
 float sdCappedCylinder( vec3 p, float h, float r )
 {
@@ -51,41 +50,41 @@ float coneSDF( vec3 p, vec2 q )
 	return sqrt(d)*sign(s);
 }
 
-float GetDist(vec3 p){
-	
+float GetDist(vec3 p,float curTime){
+
 	float shape1=sphereSDF(p+vec3(0.0,2.75,0.0)*scale,1.625*scale);
 	float shape2=sphereSDF(p+vec3(sin(curTime*0.337),abs(sin(curTime*0.428))*2.0-1.2,sin(curTime*-0.989))*scale,0.5*scale);
 	float shape3=sphereSDF(p+vec3(sin(curTime*-0.214),abs(sin(curTime*-0.725))*2.0-1.2,sin(curTime*0.56))*scale,0.75*scale);
 	float shape4=sphereSDF(p+vec3(sin(curTime*-0.671),abs(sin(curTime*0.272))*2.0-1.2,sin(curTime*0.773))*scale,1.0*scale);
-	float d = 
+	float d =
 		smoothIntersectSDF(
 		smoothUnionSDF(smoothUnionSDF(smoothUnionSDF(shape1,shape2,0.75*scale),shape3,0.75*scale),shape4,0.75*scale),
 		coneSDF(p-vec3(0.0,5.0,0.0)*scale,vec2(2.5,-11.0)*scale)
 		,0.05*scale);
 	return d;
 }
-vec3 getNormal(vec3 p){
-	
-	float d = GetDist(p);
+vec3 getNormal(vec3 p,float curTime){
+
+	float d = GetDist(p,curTime);
 	vec2 e = vec2( 0.01, 0.0);
 	vec3 n = d - vec3(
-		GetDist(p-e.xyy),
-		GetDist(p-e.yxy),
-		GetDist(p-e.yyx)
+		GetDist(p-e.xyy,curTime),
+		GetDist(p-e.yxy,curTime),
+		GetDist(p-e.yyx,curTime)
 	);
 	return normalize(n);
 }
 
-float RayMarch(vec3 ro, vec3 rd) {
+float RayMarch(vec3 ro, vec3 rd,float curTime) {
 	float dO = 0.0;
 	float dS;
-	
+
 	for (int i = 0; i < MAX_STEPS; i++)
 	{
 		vec3 p = (ro + dO * rd);
-		dS = GetDist(p);
+		dS = GetDist(p,curTime);
 		dO += dS;
-		
+
 		if (dS < SURF_DIST || dO > MAX_DIST)
 			break;
 	}
@@ -99,31 +98,31 @@ void vertex() {
 }
 
 void fragment() {
-	
+	float curTime=floor(TIME*8.0)*0.125;
 	float depth=texture(DEPTH_TEXTURE,SCREEN_UV).x;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	view.xyz /= view.w;
 	float linear_depth = -view.z;
-	
+
 	vec3 ro = world_camera;
 	vec3 rd =  normalize(world_position - ro);
-	
+
 	vec3 col;
-	
-	float d = RayMarch(ro, rd);
+
+	float d = RayMarch(ro, rd,curTime);
 	vec3 p = ro + rd * d;
 	if(d>= MAX_DIST||p.y<-3.0){
 		discard;
 	}
-	
-	
-	vec3 n = getNormal(p);
+
+
+	vec3 n = getNormal(p,curTime);
 	float h=1.0-(p.y) * 0.25;
 	float f = dot(rd,n);
 	float g= f * h;
 	col = texture(colorRamp,vec2(clamp(g*g,0.01,1.0))).rgb*texture(panColorRamp,vec2(curTime*transitionSpeed,0.5)).rgb*lightBlockage*glassColor;
-	
+
 	ALBEDO = col*BRIGHTNESS;
-	
+
 }

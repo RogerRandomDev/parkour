@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://m0j2kdyyf5hy"]
+[gd_scene load_steps=61 format=3 uid="uid://m0j2kdyyf5hy"]
 
 [ext_resource type="Shader" uid="uid://xdvq8ud4307k" path="res://Components/Sky/sky.gdshader" id="1_35c1o"]
 [ext_resource type="Texture2D" uid="uid://bnl2b77gyng7m" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="2_5b3dn"]
@@ -7,15 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://cf6rg3w4tbk8o" path="res://Components/Player/player.tscn" id="5_7yebw"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="26_4i8xb"]
 [ext_resource type="PackedScene" uid="uid://c006hss4ibvij" path="res://Components/GUI/PlayerHUD/HUD.tscn" id="26_82r8y"]
-[ext_resource type="Script" uid="uid://bda6e12p3ll6o" path="res://TestScene/LavaLamp.gd" id="28_kdx4r"]
-[ext_resource type="Shader" path="res://TestScene/LavaLamp.gdshader" id="29_pd82k"]
+[ext_resource type="Shader" uid="uid://chlwe35g11byc" path="res://TestScene/LavaLamp.gdshader" id="29_pd82k"]
 [ext_resource type="Texture2D" uid="uid://duh5cj2tqagwg" path="res://TestScene/lavapan.tres" id="30_fsubw"]
-[ext_resource type="Shader" path="res://TestScene/Glass.gdshader" id="31_80loy"]
+[ext_resource type="Shader" uid="uid://dfv1f6urhifjm" path="res://TestScene/Glass.gdshader" id="31_80loy"]
 [ext_resource type="Shader" uid="uid://dul815eisfxf7" path="res://addons/FateFramework/Environment/shadowMat.gdshader" id="32_bc7t8"]
 [ext_resource type="Script" uid="uid://d1kimt6h3f0wc" path="res://addons/FateFramework/Environment/BaseFateMaterial.gd" id="33_jd5kk"]
 [ext_resource type="Shader" uid="uid://cs84g8ea22e2o" path="res://addons/FateFramework/Environment/fateMaterial.gdshader" id="34_2tsgu"]
 [ext_resource type="Script" uid="uid://bcmkfs5wnp5qw" path="res://Components/World/AttackableObjectBase.gd" id="35_uul1b"]
-[ext_resource type="Shader" path="res://TestScene/waterbox.gdshader" id="36_08go8"]
+[ext_resource type="Shader" uid="uid://yio75qabiupc" path="res://TestScene/waterbox.gdshader" id="36_08go8"]
 [ext_resource type="Script" uid="uid://c1vp5vbjw6m8" path="res://TestScene/watertank.gd" id="37_mid5b"]
 
 [sub_resource type="Gradient" id="Gradient_kgoht"]
@@ -214,8 +213,9 @@ shader_parameter/TEXTURE = ExtResource("2_5b3dn")
 shader_parameter/scaleMult = 1.0
 
 [sub_resource type="Gradient" id="Gradient_gn7gq"]
-offsets = PackedFloat32Array(0.0869565, 0.492754, 0.623188, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.94902, 0.94902, 0.94902, 1, 0.670588, 0.670588, 0.670588, 1, 0.321569, 0.321569, 0.321569, 1)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.126667, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.321569, 0.321569, 0.321569, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_cakgu"]
 gradient = SubResource("Gradient_gn7gq")
@@ -224,8 +224,7 @@ width = 64
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c4gxn"]
 render_priority = 102
 shader = ExtResource("29_pd82k")
-shader_parameter/curTime = 1.1375
-shader_parameter/BRIGHTNESS = 20.0
+shader_parameter/BRIGHTNESS = 2.5
 shader_parameter/scale = 1.0
 shader_parameter/lightBlockage = 0.558
 shader_parameter/glassColor = Color(1, 0.537255, 0.803922, 1)
@@ -253,7 +252,7 @@ height = 6.0
 radial_segments = 16
 rings = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qd3cj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uuxdw"]
 render_priority = 0
 shader = ExtResource("32_bc7t8")
 
@@ -267,7 +266,7 @@ width = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sgtng"]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_qd3cj")
+next_pass = SubResource("ShaderMaterial_uuxdw")
 shader = ExtResource("34_2tsgu")
 shader_parameter/TEXTURE = SubResource("GradientTexture1D_mcroj")
 script = ExtResource("33_jd5kk")
@@ -479,6 +478,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3.55, -22.95)
 size = Vector3(7, 7, 32)
 material = SubResource("ShaderMaterial_bkwqy")
 
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89148, 11.0462, -52.5798)
+size = Vector3(7, 21.9923, 1.25879)
+material = SubResource("ShaderMaterial_bkwqy")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89148, 21.5907, -63.8244)
+size = Vector3(7, 0.903259, 23.748)
+material = SubResource("ShaderMaterial_bkwqy")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89148, 13.0003, -44.7217)
+size = Vector3(7, 13.3983, 1.25879)
+material = SubResource("ShaderMaterial_bkwqy")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.885604, 0, 0.46444, 0, 1, 0, -0.46444, 0, 0.885604, -0.615623, 13.1191, -51.5837)
+size = Vector3(7, 7, 1.25879)
+material = SubResource("ShaderMaterial_bkwqy")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.885604, 0, 0.46444, 0, 1, 0, -0.46444, 0, 0.885604, 12.2062, 21.7869, -46.176)
+size = Vector3(7, 7, 1.25879)
+material = SubResource("ShaderMaterial_bkwqy")
+
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3.55, -22.95)
 operation = 2
@@ -502,22 +526,8 @@ grow_horizontal = 1
 grow_vertical = 1
 initial_node_to_watch = NodePath("../../Player")
 
-[node name="guns" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5, 7)
-script = null
-
 [node name="LavaLamp" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 5.5, 33.2)
-script = ExtResource("28_kdx4r")
 metadata/_edit_group_ = true
 
 [node name="Lava" type="MeshInstance3D" parent="LavaLamp"]
@@ -557,16 +567,6 @@ shape = SubResource("ConvexPolygonShape3D_rwx4p")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LavaLamp/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, -1, -0.000540901, 0, 0.000540901, -1, 0, -4, 0)
 shape = SubResource("ConvexPolygonShape3D_uvh5y")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="LavaLamp"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.83398, 0)
-light_color = Color(1, 0.436654, 0, 1)
-light_energy = 4.0
-light_specular = 16.0
-light_bake_mode = 1
-shadow_enabled = true
-omni_range = 9.7
-omni_attenuation = 0.0819201
 
 [node name="AttackableObject" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7, 3, 32)

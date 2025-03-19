@@ -37,6 +37,8 @@ func trigger():
 	root.moveTo(abilityArea.motion*dat[0]+abilityArea.transform.origin)
 	travelVector=abilityArea.motion
 	travelDistance=dat[0]
+	root.velocity+=abilityArea.motion
+	
 	
 	loadAbilityVisuals()
 

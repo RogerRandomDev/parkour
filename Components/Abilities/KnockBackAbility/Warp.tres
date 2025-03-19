@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="AbilityResource" load_steps=5 format=3 uid="uid://bqkgiqj3b2m10"]
 
-[ext_resource type="Script" path="res://addons/FateFramework/Ability/AbilityResource.gd" id="1_64grn"]
-[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackPrimary.gd" id="1_jgy3q"]
-[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackMotion.gd" id="2_cwg5y"]
-[ext_resource type="Script" path="res://Components/Abilities/KnockBackAbility/KnockBackSecondary.gd" id="2_g5yhx"]
+[ext_resource type="Script" uid="uid://dn5tw0h10q8op" path="res://addons/FateFramework/Ability/AbilityResource.gd" id="1_64grn"]
+[ext_resource type="Script" uid="uid://buo114rc8m4ww" path="res://Components/Abilities/KnockBackAbility/KnockBackPrimary.gd" id="1_jgy3q"]
+[ext_resource type="Script" uid="uid://1y53m3n4wo0w" path="res://Components/Abilities/KnockBackAbility/KnockBackMotion.gd" id="2_cwg5y"]
+[ext_resource type="Script" uid="uid://d3hir1fdagegg" path="res://Components/Abilities/KnockBackAbility/KnockBackSecondary.gd" id="2_g5yhx"]
 
 [resource]
 script = ExtResource("1_64grn")
@@ -24,7 +24,7 @@ hasMotion = true
 MotionName = "Leap"
 MotionDescription = ""
 MotionEffect = ExtResource("2_cwg5y")
-motionAbilityDelay = 0.5
+motionAbilityDelay = 5.0
 motionAbilityEnergy = 20
 hasPassive = false
 PassiveName = ""

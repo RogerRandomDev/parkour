@@ -269,6 +269,36 @@ func _on_sliding_enabled_state_physics_process(delta):
 
 
 
+func _on_walljump_enabled_state_physics_process(delta)->void:
+	if not Input.is_action_just_pressed("jump"):return
+	if not is_on_wall():return
+	var normal=get_wall_normal()
+	var  y_rot:float=Input.get_axis("right","left")*PI*0.5+max(Input.get_axis("forward","backward")*PI,0.0)
+	y_rot+=$CameraArm.rotation.y
+	
+	var motion_velocity=normal+Vector3(sin(y_rot),-2.5,cos(y_rot))
+	var bounced_velocity=motion_velocity.reflect(normal)
+	velocity.y=min(max(bounced_velocity.y*10,-30),velocity.y)
+	velocity+=bounced_velocity*10
+	
+	
+	var jumpingParticles=$JumpParticles.duplicate()
+	get_parent_node_3d().add_child(jumpingParticles)
+	jumpingParticles.global_position=$JumpParticles.global_position
+	jumpingParticles.emitting=true
+	var wall_normal=get_wall_normal()
+	#align particles with the direction of the face you jumped off of
+	if is_on_wall():
+		jumpingParticles.rotation.x=-PI/2
+		if wall_normal.y!=1.0:jumpingParticles.look_at(-wall_normal+jumpingParticles.global_position)
+	else:
+		jumpingParticles.rotation=$Model.rotation
+		#realigns particles if jumping during coyote time
+		if grounded_since_last_jump:jumpingParticles.rotation=Vector3(-PI/2,0,0)
+	
+	jumpingParticles.finished.connect(func():jumpingParticles.queue_free())
+
+
 
 
 func _on_holster_weapon_state_entered():

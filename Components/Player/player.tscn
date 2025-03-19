@@ -10,10 +10,10 @@
 [ext_resource type="Script" uid="uid://blb36qsgticgj" path="res://addons/FateFramework/Entity/Utility/Energy.gd" id="11_xpj0e"]
 [ext_resource type="Animation" uid="uid://dnj6sxrwlsdmd" path="res://Components/Player/animations/idleAnim.tres" id="12_s8c32"]
 [ext_resource type="Script" uid="uid://rm7q8db55ctm" path="res://Components/Player/Camera.gd" id="12_wc640"]
-[ext_resource type="Animation" uid="uid://u61hxnc6dw0d" path="res://Components/Player/animations/runningAnim.tres" id="13_5alrs"]
+[ext_resource type="Animation" uid="uid://u61hxnc6dw0d" path="res://godot_state_charts_examples/runningAnim.tres" id="13_5alrs"]
 [ext_resource type="Shader" uid="uid://c6tgxp7em8sft" path="res://Components/Player/materials/Testing.gdshader" id="13_yr4w5"]
 [ext_resource type="Animation" uid="uid://cq5vh8pl6foxt" path="res://Components/Player/animations/slidingAnim.res" id="14_mcxm6"]
-[ext_resource type="Animation" uid="uid://dafjyltupepoi" path="res://Components/Player/animations/walkingAnim.tres" id="15_2sfyy"]
+[ext_resource type="Animation" uid="uid://dafjyltupepoi" path="res://godot_state_charts_examples/walkingAnim.tres" id="15_2sfyy"]
 [ext_resource type="PackedScene" uid="uid://ddiw0f2qim6xk" path="res://Components/Player/testingCharacter.glb" id="15_uexfw"]
 [ext_resource type="Texture2D" uid="uid://b08eefprun4xi" path="res://addons/kenney_particle_pack/smoke_08.png" id="21_civ5l"]
 [ext_resource type="Script" uid="uid://vghd1l68boyj" path="res://addons/FateFramework/Equipment/Weapons/WeaponModelManager.gd" id="21_tqc2c"]
@@ -5148,6 +5148,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.199999)
 [node name="testingCharacter" parent="Model" instance=ExtResource("15_uexfw")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1, 0)
 
+[node name="Armature" parent="Model/testingCharacter" index="0"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, -0.01, 0, 0.01, -4.37114e-10, 0, 0, 0)
+
 [node name="Skeleton3D" parent="Model/testingCharacter/Armature" index="0"]
 bones/0/position = Vector3(-0.960758, 2.49725, -96.9123)
 bones/0/rotation = Quaternion(-0.676621, -0.272943, 0.255464, 0.63437)
@@ -5251,7 +5254,7 @@ bones/63/position = Vector3(6.41195e-07, 13.8169, 1.30651e-06)
 bones/63/rotation = Quaternion(0.354274, 0.016495, -0.0237667, 0.934694)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Model/testingCharacter/Armature/Skeleton3D" index="2"]
-transform = Transform3D(0.867852, -0.0120612, -0.496676, 0.495689, 0.0885127, 0.863978, 0.0335416, -0.996002, 0.0827946, 0.412553, 1.18026, -116.998)
+transform = Transform3D(0.867852, -0.0120612, -0.496676, 0.495689, 0.0885128, 0.863978, 0.0335416, -0.996002, 0.0827946, 0.412552, 1.18026, -116.998)
 bone_name = "mixamorig_Spine1"
 bone_idx = 2
 
@@ -5283,7 +5286,7 @@ process_material = SubResource("ParticleProcessMaterial_ewyvc")
 draw_pass_1 = SubResource("QuadMesh_3p50d")
 
 [node name="WeaponModelManager" type="Node3D" parent="."]
-transform = Transform3D(-0.0441962, -0.44359, 0.891159, 0.17888, -0.877447, -0.431452, 0.978153, 0.140421, 0.119167, -0.00412553, 0.169983, -0.0118026)
+transform = Transform3D(-0.0441961, -0.44359, 0.891159, 0.17888, -0.877447, -0.431452, 0.978153, 0.140421, 0.119167, -0.00412552, 0.169983, -0.0118027)
 visible = false
 script = ExtResource("21_tqc2c")
 
@@ -5529,6 +5532,7 @@ target_position = Vector3(0, -1.1, 0)
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/grounded" to="." method="_on_jump_enabled_state_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/grounded" to="." method="_on_movement_enabled_state_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Airborne" to="." method="_on_movement_enabled_state_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Airborne" to="." method="_on_walljump_enabled_state_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Airborne/CannotJump" to="." method="_on_cannotjump_airborne_physics_process"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Airborne/Jumped" to="." method="_on_jumped_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Airborne/CoyoteTime" to="." method="_on_jump_enabled_state_physics_process"]
